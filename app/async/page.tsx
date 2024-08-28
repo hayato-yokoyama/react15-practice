@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
 type Geo = {
   lat: string;
@@ -43,15 +43,27 @@ const getUser = async (userId: string) => {
 const AsyncPage = () => {
   const [userId, setUserId] = useState("");
   const [user, setUser] = useState<User | null>(null);
-  const [isPending, setIsPending] = useState(false);
+  // const [isPending, setIsPending] = useState(false);
 
-  const handleClick = async () => {
+  // const handleClick = async () => {
+  //   setUser(null);
+  //   setIsPending(true);
+  //   const user = await getUser(userId);
+  //   setUser(user);
+  //   setUserId("");
+  //   setIsPending(false);
+  // };
+
+  const [isPending, startTransition] = useTransition();
+  const handleClick = () => {
     setUser(null);
-    setIsPending(true);
-    const user = await getUser(userId);
-    setUser(user);
-    setUserId("");
-    setIsPending(false);
+
+    // 非同期関数を実行できる
+    startTransition(async () => {
+      const user = await getUser(userId);
+      setUser(user);
+      setUserId("");
+    });
   };
 
   return (
