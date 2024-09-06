@@ -43,28 +43,32 @@ const getUser = async (userId: string) => {
 const AsyncPage = () => {
   const [userId, setUserId] = useState("");
   const [user, setUser] = useState<User | null>(null);
-  // const [isPending, setIsPending] = useState(false);
+  const [isPending, setIsPending] = useState(false);
 
-  // const handleClick = async () => {
-  //   setUser(null);
-  //   setIsPending(true);
-  //   const user = await getUser(userId);
-  //   setUser(user);
-  //   setUserId("");
-  //   setIsPending(false);
-  // };
+  const handleClick = async () => {
+    console.log("クリック");
 
-  const [isPending, startTransition] = useTransition();
-  const handleClick = () => {
     setUser(null);
-
-    // 非同期関数を実行できる
-    startTransition(async () => {
-      const user = await getUser(userId);
-      setUser(user);
-      setUserId("");
-    });
+    setIsPending(true);
+    const user = await getUser(userId);
+    setUser(user);
+    setUserId("");
+    setIsPending(false);
   };
+
+  // const [isPending, startTransition] = useTransition();
+  // const handleClick = () => {
+  //   console.log("クリック");
+
+  //   setUser(null);
+
+  //   // 非同期関数を実行できる
+  //   startTransition(async () => {
+  //     const user = await getUser(userId);
+  //     setUser(user);
+  //     setUserId("");
+  //   });
+  // };
 
   return (
     <div className="space-y-4">

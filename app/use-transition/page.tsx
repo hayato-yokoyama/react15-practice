@@ -7,9 +7,10 @@ export default function Home() {
   const [isPending, startTransition] = useTransition();
 
   const changePage = (newPage: number) => {
-    startTransition(() => {
-      setCurrentPage(newPage);
-    });
+    setCurrentPage(newPage);
+    // startTransition(() => {
+    //   setCurrentPage(newPage);
+    // });
   };
 
   return (
